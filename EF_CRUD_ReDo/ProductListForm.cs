@@ -1,5 +1,6 @@
 ﻿using EF_CRUD_ReDo.DAL.Context;
 using EF_CRUD_ReDo.DAL.Entity;
+using EF_CRUD_ReDo.DTO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -29,7 +30,17 @@ namespace EF_CRUD_ReDo
         {
             using (EComerceDBContext DB = new EComerceDBContext())
             {
-                var result = DB.Products.ToList();
+                var result = DB.Products.Select(t0 => new ProductDTO()
+                {
+                    ProductName = t0.ProductName,
+                    Description = t0.Description,
+                    Disconitued = Convert.ToBoolean(t0.Discontinued),
+                    UnitPrice =Convert.ToDecimal(t0.UnitPrice),
+                    UnitsInStock = Convert.ToInt32(t0.UnitsInStock),
+                    CategoryId = Convert.ToInt32(t0.CategoryId),
+                    ProductId = Convert.ToInt32(t0.ProductId),
+                }).ToList();
+                dataGridView1.DataSource = null;
                 dataGridView1.DataSource = result;
             }
         }
@@ -51,6 +62,11 @@ namespace EF_CRUD_ReDo
                     form.ShowDialog();
                 }
             }
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

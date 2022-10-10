@@ -17,11 +17,17 @@ namespace EF_CRUD_ReDo.DAL.Entity
         public string? CustomerName { get; set; }
 
         public string? Phone { get; set; }
+
         public int? CountryId { get; set; }
+
         public virtual List<Order> Orders { get; set; }
-        public virtual Country Country { get; set; }
+
+        public virtual Country Country { get; set; } 
+
         public virtual City City { get; set; }
+
         public virtual List<District> Districts { get; set; }
+
 
         public string? Email { get; set; }
 

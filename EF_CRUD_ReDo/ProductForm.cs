@@ -16,5 +16,10 @@ namespace EF_CRUD_ReDo
         {
             InitializeComponent();
         }
+
+        private void ProductForm_Load(object sender, EventArgs e)
+        {
+            int productId = Convert.ToInt32(this.Tag);
+        }
     }
 }
