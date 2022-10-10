@@ -4,6 +4,7 @@ using EF_CRUD_ReDo.DAL.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EF_CRUD_ReDo.Migrations
 {
     [DbContext(typeof(EComerceDBContext))]
-    partial class EComerceDBContextModelSnapshot : ModelSnapshot
+    [Migration("20221010164954_update-db")]
+    partial class updatedb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -138,7 +140,6 @@ namespace EF_CRUD_ReDo.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("CustomerId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("DistrictName")
@@ -149,7 +150,9 @@ namespace EF_CRUD_ReDo.Migrations
 
                     b.HasIndex("CityId");
 
-                    b.HasIndex("CustomerId");
+                    b.HasIndex("CustomerId")
+                        .IsUnique()
+                        .HasFilter("[CustomerId] IS NOT NULL");
 
                     b.ToTable("Districts");
                 });
@@ -283,10 +286,8 @@ namespace EF_CRUD_ReDo.Migrations
                         .IsRequired();
 
                     b.HasOne("EF_CRUD_ReDo.DAL.Entity.Customer", "Customer")
-                        .WithMany("Districts")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .WithOne("District")
+                        .HasForeignKey("EF_CRUD_ReDo.DAL.Entity.District", "CustomerId");
 
                     b.Navigation("City");
 
@@ -351,7 +352,8 @@ namespace EF_CRUD_ReDo.Migrations
 
             modelBuilder.Entity("EF_CRUD_ReDo.DAL.Entity.Customer", b =>
                 {
-                    b.Navigation("Districts");
+                    b.Navigation("District")
+                        .IsRequired();
 
                     b.Navigation("Orders");
                 });

@@ -6,5 +6,11 @@ namespace EF_CRUD_ReDo
         {
             InitializeComponent();
         }
+
+        private void menuProductItem_Click(object sender, EventArgs e)
+        {
+            var from = new ProductListForm();
+            from.Show();
+        }
     }
 }

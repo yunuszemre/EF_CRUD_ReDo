@@ -19,6 +19,7 @@ namespace EF_CRUD_ReDo.DAL.Configuration
 
             //Mahalle-Şehir =>One-To-Many ilişki
             builder.HasOne(t0 => t0.City).WithMany(t1 => t1.Districts).HasForeignKey(t2 => t2.CityId).OnDelete(DeleteBehavior.Restrict);
+            builder.HasOne(t0 => t0.Customer).WithMany(t1 => t1.Districts).HasForeignKey(t2 => t2.CustomerId).OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
